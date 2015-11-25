@@ -1,0 +1,65 @@
+@import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,700);
+
+
+body {
+    font-family: 'Noto Sans', 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 18px;
+}
+
+.alert-warning {
+    color: black;
+    background-color:rgba(252,248,227,0.75);
+    width: auto;
+}
+
+@media (min-width: 650px) {
+    body {
+        color: white;
+    }
+
+    .container {
+        background-image: url('../img/Night%20Visions.png');
+        background-size: cover;
+        width: 100%;
+        height: 750px;
+    }
+}
+
+
+h2 {
+    font-size: 16px;
+}
+
+
+p{
+    padding-bottom: 0.5em;
+}
+#error-message {
+    display: none;
+}
+
+.fa-spin {
+    display: none;
+}
+
+.review-group {
+
+}
+
+#rating, #average-rating {
+    color: #FFBB00;
+}
+
+.btn {
+    margin-bottom: 1em;
+}
+.review-control {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    color: black;
+
+}
+
+

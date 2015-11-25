@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Product Reviews</title>
+    <link rel="stylesheet" href="css/main.css">
+
+</head>
+    <body>
+        <main class="container">
+            <h1>Night Visions album Reviews <i class="fa fa-refresh fa-spin"></i></h1>
+            <h2><a href="https://www.imaginedragonsmusic.com/">Imagine Dragons</a></h2>
+            <p id="error-message" class="alert alert-danger"></p>
+            <p>Average Rating: <span id="average-rating"></span></p>
+            <p class="alert alert-warning">
+                Already bought ours newly released Smoke and Mirrors music album? Then we would love to hear back from you!
+                Please rate our albums and give us feedback! The top 10 most helpful reviews will receive our next album for free!</p>
+
+
+            <div class="review-group">
+                <span id="rating"></span>
+            </div>
+            <form id="new-music-review">
+                <div class="review-group">
+                    <input type="text" class="review-control" name="title"
+                           placeholder="new reviews" autofocus/>
+                </div>
+                <div class="review-group">
+                    <button type="reset" class="btn btn-default">Clear</button>
+                    <button type="submit" class="btn btn-primary">Add New Reviews</button>
+                </div>
+            </form>
+
+            <ul id="reviews-list"></ul>
+            <!-- jQuery library -->
+            <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+            <!-- Parse.com library -->
+            <script src="https://www.parsecdn.com/js/parse-1.6.7.min.js"></script>
+            <script src="lib/jquery.raty-fa.js"></script>
+            <script src="js/app.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </main>
+    </body>
+</html>
