@@ -11,6 +11,8 @@ $(function() {
     var Review = new Parse.Object.extend('Review');
     var reviewsQuery = new Parse.Query(Review);
     reviewsQuery.ascending('createdAt');
+    var rateLevel = [0, 0, 0, 0, 0];
+
 
     /* Make reference of error message and original track list */
     var reviewsList = $('#reviews-list');
@@ -63,16 +65,12 @@ $(function() {
                 .addClass("review-box")
                 .appendTo(reviewsList);
 
-            // 1. Add review title
-            var title = $(document.createElement('span'))
-                .addClass('individual-review')
-                .text(review.get('title'))
-                .appendTo(box);
 
-            // 2. Add star ratings and numeric rating
+            // 1. Add star ratings and numeric rating
             numReviews++;
-            totalScores += review.get('rating');
-            var rat = $(document.createElement('span'))
+            var currentRate = review.get('rating');
+            totalScores += currentRate;
+            var rat = $(document.createElement('p'))
                 .addClass("individual-rating")
                 .raty({
                     readOnly: true,
@@ -80,15 +78,24 @@ $(function() {
                     hints: ['worst', 'bad','ok','good','awesome']
                 })
                 .appendTo(box);
+                if(currentRate === 1) {
+                    rateLevel[4]++
+                } else if (currentRate === 2) {
+                    rateLevel[3]++;
+                } else if (currentRate === 3) {
+                    rateLevel[2]++;
+                } else if (currentRate === 4) {
+                    rateLevel[1]++;
+                } else if(currentRate === 5){
+                    rateLevel[0]++;
+                }
 
 
-            var totalHelps = review.get('thumbsUp') + review.get('thumbsDown');
-            var helpfulness = $(document.createElement('span'))
-                .addClass("helpfulness")
-                .text(review.get('thumbsUp') + " out of " + totalHelps + " views people found are useful")
-                .appendTo(box);
 
-            // 4. Delete the existing review
+
+
+
+            // 2. Delete the existing review
             var clear = $(document.createElement('span'))
                 .addClass('fa fa-trash-o')
                 .appendTo(box)
@@ -100,9 +107,20 @@ $(function() {
                         error: function(review, error) {
                             displayError("Can't Delete this Review");
                         }
-
                     });
+                    if(currentRate === 1) {
+                        rateLevel[4]--;
+                    } else if (currentRate === 2) {
+                        rateLevel[3]--;
+                    } else if (currentRate === 3) {
+                        rateLevel[2]--;
+                    } else if (currentRate === 4) {
+                        rateLevel[1]--;
+                    } else if(currentRate === 5){
+                        rateLevel[0]--;
+                    }
                 });
+
 
             // 3. Add the helpful / unhelpful votes
             var thumbsUp = $(document.createElement('span'))
@@ -121,6 +139,18 @@ $(function() {
                     review.save().then(renderReviews, displayError)
                 });
 
+            // 4. Add review title
+            var title = $(document.createElement('span'))
+                .addClass('individual-review')
+                .text(review.get('title'))
+                .appendTo(box);
+
+            var totalHelps = review.get('thumbsUp') + review.get('thumbsDown');
+            var helpfulness = $(document.createElement('p'))
+                .addClass("helpfulness")
+                .text(review.get('thumbsUp') + " out of " + totalHelps + " views people found are useful")
+                .appendTo(box);
+
         });
 
         // 5. Show average rating of all the reviews
@@ -131,6 +161,25 @@ $(function() {
                 readOnly: true,
                 score:aveRate
             });
+
+        // 6. Get the 2d context of the canvas element and create dynamic data reflections
+        var canvas = document.getElementById('myChart');
+        var ctx = canvas.getContext('2d');
+        var data = {
+            labels: ["Awesome", "Good", "Ok", "Bad", "Worse"],
+            datasets: [
+                {
+                    label: "My First dataset",
+                    fillColor: "rgba(220,220,220,0.5)",
+                    strokeColor: "rgba(220,220,220,0.8)",
+                    highlightFill: "rgba(220,220,220,0.75)",
+                    highlightStroke: "rgba(220,220,220,1)",
+                    data: [rateLevel[0], rateLevel[1], rateLevel[2], rateLevel[3], rateLevel[4]]
+                }
+            ]
+        };
+        var myBarChart = new Chart(ctx).Bar(data);
+
     }
 
 
@@ -146,7 +195,7 @@ $(function() {
         var review = new Review();
         review.set('title', title);
         review.set('body', body);
-        review.set('rating', starsRate.raty('score') || 0)
+        review.set('rating', starsRate.raty('score') || 0);
         review.set('thumbsUp', 0);
         review.set('thumbsDown', 0);
 
@@ -163,31 +212,5 @@ $(function() {
     fetchReviews();
     starsRate.raty();
 
-    // Get the 2d context of the canvas element
-    var canvas = document.getElementById('myChart');
-    var ctx = canvas.getContext('2d');
-    var data = {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
-        datasets: [
-            {
-                label: "My First dataset",
-                fillColor: "rgba(220,220,220,0.5)",
-                strokeColor: "rgba(220,220,220,0.8)",
-                highlightFill: "rgba(220,220,220,0.75)",
-                highlightStroke: "rgba(220,220,220,1)",
-                data: [65, 59, 80, 81, 56, 55, 40]
-            },
-            {
-                label: "My Second dataset",
-                fillColor: "rgba(151,187,205,0.5)",
-                strokeColor: "rgba(151,187,205,0.8)",
-                highlightFill: "rgba(151,187,205,0.75)",
-                highlightStroke: "rgba(151,187,205,1)",
-                data: [28, 48, 40, 19, 86, 27, 90]
-            }
-        ]
-    };
-
-    var myBarChart = new Chart(ctx).Bar(data);
 });
 

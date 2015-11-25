@@ -20,10 +20,10 @@ body {
     }
 
     .container {
-        background-image: url('../img/Night%20Visions.png');
+        background-image: url('../img/Night Visions.png');
         background-size: cover;
         width: 100%;
-        height: 750px;
+        height: 100%;
     }
 }
 
@@ -44,8 +44,14 @@ p{
     display: none;
 }
 
-.review-group {
+.review-box {
+    margin: 1em;
+}
 
+
+.fa-trash-o, .fa-thumbs-o-up, .fa-thumbs-o-down {
+    float: right;
+    padding: 10px;
 }
 
 #rating, #average-rating {
@@ -53,7 +59,7 @@ p{
 }
 
 .btn {
-    margin-bottom: 1em;
+    margin-bottom: 20px;
 }
 .review-control {
     margin-top: 1em;
