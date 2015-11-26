@@ -68,4 +68,15 @@ p{
 
 }
 
+canvas {
+    float: left;
+}
+
+#trend {
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: aqua;
+}
+
 

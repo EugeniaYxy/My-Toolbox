@@ -11,7 +11,6 @@ $(function() {
     var Review = new Parse.Object.extend('Review');
     var reviewsQuery = new Parse.Query(Review);
     reviewsQuery.ascending('createdAt');
-    var rateLevel = [0, 0, 0, 0, 0];
 
 
     /* Make reference of error message and original track list */
@@ -56,8 +55,10 @@ $(function() {
         renderReviews();
     }
 
+
     function renderReviews() {
         reviewsList.empty();
+        var rateLevel = [0,0,0,0,0];
         reviews.forEach(function(review) {
             /* Create an individual review box each time when a music review is added in
              It includes: title, numeric ratings and comments. */
@@ -78,22 +79,17 @@ $(function() {
                     hints: ['worst', 'bad','ok','good','awesome']
                 })
                 .appendTo(box);
-                if(currentRate === 1) {
-                    rateLevel[4]++
-                } else if (currentRate === 2) {
-                    rateLevel[3]++;
-                } else if (currentRate === 3) {
-                    rateLevel[2]++;
-                } else if (currentRate === 4) {
-                    rateLevel[1]++;
-                } else if(currentRate === 5){
-                    rateLevel[0]++;
-                }
-
-
-
-
-
+            if(currentRate === 1) {
+                rateLevel[4]++
+            } else if (currentRate === 2) {
+                rateLevel[3]++;
+            } else if (currentRate === 3) {
+                rateLevel[2]++;
+            } else if (currentRate === 4) {
+                rateLevel[1]++;
+            } else if(currentRate === 5){
+                rateLevel[0]++;
+            }
 
             // 2. Delete the existing review
             var clear = $(document.createElement('span'))
